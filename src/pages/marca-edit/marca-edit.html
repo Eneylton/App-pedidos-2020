@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Marca</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content>
+  <ion-fab top right edge>
+    <button color="light" ion-fab mini (click)="editar()">
+      <ion-icon name="md-checkmark"></ion-icon>
+    </button>
+  </ion-fab>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-input placeholder="Digite..." [(ngModel)]="descricao" type="text"></ion-input>
+        </ion-item>
+
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

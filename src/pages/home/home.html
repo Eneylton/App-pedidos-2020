@@ -1,18 +1,113 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>Lista de Produtos</ion-title>
+
+    <ion-searchbar placeholder="Pesquisar" *ngIf="isSearchbarOpened" showCancelButton="true"
+      (ionCancel)="isSearchbarOpened=false" (ionInput)="getProdutos($event)">
+    </ion-searchbar>
+    <ion-buttons end>
+
+      <button ion-button icon-only *ngIf="!isSearchbarOpened" (click)="isSearchbarOpened=true">
+
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <ion-fab bottom right>
+    <button color="light" ion-fab mini (click)="adicionar()">
+      <ion-icon name="add"></ion-icon>
+    </button>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  </ion-fab>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Atualizando...">
+
+    </ion-refresher-content>
+
+  </ion-refresher>
+
+
+  <ion-list>
+    <ion-item-sliding *ngFor="let prod of produtos" style="margin-top: 20px;">
+      <ion-item>
+
+        <div class="card">
+          <div class="card-header bg-warning text-white">
+            <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+            <span style="padding: 5px; text-transform: uppercase; font-size: 12px;"> {{prod.cat}} {{prod.fab}}</span>
+          </div>
+          <div class="card-body">
+            <img src="{{url+prod.foto}}" style="width: 80px; height: 70px; float: left; padding-right: 15px;">
+            <p class="card-text texto01"><span>{{prod.marca}} / {{prod.modelo}}</span></p>
+            <p class="texto02">Referência: {{prod.ref}} </p>
+            <a href="#" class="btn btn-primary">ENVIAR</a>
+          </div>
+        </div>
+
+      </ion-item>
+
+      <ion-item-options side="left">
+
+        <button ion-button color="light" (click)="conta(prod.id,
+        prod.referencia,
+        prod.foto,
+        prod.marca_id,
+        prod.modelo_id,
+        prod.categoria_id,
+        prod.fabricante_id)">
+
+
+          <ion-icon name="contact"></ion-icon> Minha Conta
+        </button>
+
+      </ion-item-options>
+
+      <ion-item-options side="right">
+
+
+        <button ion-button color="dark" (click)="editar(prod.id,
+                                                        prod.ref,
+                                                        prod.cat,
+                                                        prod.marca,
+                                                        prod.fab,
+                                                        prod.foto,
+                                                        prod.modelo,
+                                                        prod.cat_id,
+                                                        prod.marca_id,
+                                                        prod.fab_id,
+                                                        prod.mod_id
+                                                        
+                                                        )">
+          <ion-icon name="brush"></ion-icon>
+        </button>
+
+
+        <button ion-button color="danger" (click)="delete(prod.id)">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+
+      </ion-item-options>
+
+
+    </ion-item-sliding>
+  </ion-list>
+
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="CARREGANDO...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
 </ion-content>

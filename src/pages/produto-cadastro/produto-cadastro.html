@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Cadastro</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content>
+  <ion-fab top right edge>
+    <button color="light" ion-fab mini (click)="cadastrar()">
+      <ion-icon name="md-checkmark"></ion-icon>
+    </button>
+  </ion-fab>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+
+        <ion-list>
+          <ion-item >
+            <img style="max-width: 70%; margin-left: 50px;" src="../../assets/imgs/s-img.png" *ngIf="base64Image == ''"   >
+            <img style="max-width: 70%; margin-left: 50px;" src="{{base64Image}}" *ngIf="base64Image != ''"   >
+        
+          </ion-item>
+      
+        </ion-list>
+
+        <div>
+          <button ion-button block (click)="presentActionSheet()" color="danger">Upload</button>
+        </div>
+      
+        
+
+        <ion-item>
+          <ion-label style="font-size: 14px;">Categoria</ion-label>
+          <ion-select [(ngModel)]="categoria_id">
+            <ion-option *ngFor="let item of categorias; Index as i" [selected]="i" value="{{item.id}}">{{item.descricao}}</ion-option>
+          </ion-select>
+        </ion-item>  
+
+
+        <ion-item>
+          <ion-label style="font-size: 14px;">Marca</ion-label>
+          <ion-select [(ngModel)]="marca_id" (ionChange)="listarModelo()">
+            <ion-option *ngFor="let item of marcas"  value="{{item.id}}">{{item.descricao}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <<ion-item>
+          <ion-label style="font-size: 14px;">Veículo</ion-label>
+          <ion-select [(ngModel)]="modelo_id">
+            <ion-option *ngFor="let item of modelos" value="{{item.id}}">{{item.descricao}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-input placeholder="Preferência" [(ngModel)]="referencia" type="text"></ion-input>
+        </ion-item>
+
+        <<ion-item>
+          <ion-label style="font-size: 14px;">Fabricante</ion-label>
+          <ion-select [(ngModel)]="fabricante_id">
+            <ion-option *ngFor="let item of fabricantes" value="{{item.id}}">{{item.descricao}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+      
+
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>
